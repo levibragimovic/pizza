@@ -1,12 +1,11 @@
 import { useState } from 'react';
 
-function Sort() {
+const Sort = ({ selected, onSortChange }) => {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(0);
   const list = ['популярности', 'цене', 'алфавиту'];
 
   const selectFilter = (i) => {
-    setSelected(i);
+    onSortChange(i);
     setOpen(false);
   };
 
@@ -51,6 +50,6 @@ function Sort() {
       )}
     </div>
   );
-}
+};
 
 export default Sort;
