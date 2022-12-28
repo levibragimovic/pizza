@@ -1,11 +1,15 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSortTypeId } from '../redux/slices/filterSlice';
 
-const Sort = ({ selected, onSortChange }) => {
+const Sort = () => {
+  const dispatch = useDispatch();
+  const sortId = useSelector((state) => state.filters.sortTypeId);
   const [open, setOpen] = useState(false);
   const list = ['популярности', 'цене', 'алфавиту'];
 
   const selectFilter = (i) => {
-    onSortChange(i);
+    dispatch(setSortTypeId(i));
     setOpen(false);
   };
 
@@ -30,7 +34,7 @@ const Sort = ({ selected, onSortChange }) => {
           style={{ userSelect: 'none' }}
           onClick={() => setOpen((pv) => !pv)}
         >
-          {list[selected]}
+          {list[sortId]}
         </span>
       </div>
       {open && (
@@ -40,7 +44,7 @@ const Sort = ({ selected, onSortChange }) => {
               <li
                 key={i}
                 onClick={() => selectFilter(i)}
-                className={selected === i ? 'active' : ''}
+                className={sortId === i ? 'active' : ''}
               >
                 {item}
               </li>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 const PizzaBlock = ({ name, price, imageUrl, sizes, types }) => {
+  console.log('PIZZABLOCK comp');
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
   const typeName = ['тонкое', 'традиционное'];
