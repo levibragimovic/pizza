@@ -4,7 +4,7 @@ import { setSortTypeId } from '../redux/slices/filterSlice';
 
 const Sort = () => {
   const dispatch = useDispatch();
-  const sortId = useSelector((state) => state.filters.sortTypeId);
+  const sortId = useSelector((state) => state.filters.sortId);
   const [open, setOpen] = useState(false);
   const list = ['популярности', 'цене', 'алфавиту'];
 

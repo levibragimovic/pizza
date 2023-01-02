@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setCurrentPage } from '../../redux/slices/filterSlice';
 import styles from './Pagination.module.scss';
 
-const Pagination = () => {
+const Pagination = ({ currentPage }) => {
   const dispatch = useDispatch();
   const changePage = (e) => {
     dispatch(setCurrentPage(e.selected + 1));
@@ -16,6 +16,7 @@ const Pagination = () => {
       onPageChange={changePage}
       pageCount={3}
       previousLabel="<"
+      forcePage={currentPage - 1}
     />
   );
 };
