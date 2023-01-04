@@ -5,24 +5,21 @@ import PizzaBlock from '../components/PizzaBlock';
 import { useEffect, useRef } from 'react';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
-import { SearchContext } from '../App';
 import { useDispatch, useSelector } from 'react-redux';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
-import { setParams } from '../redux/slices/filterSlice';
+import { selectFiltersState, setParams } from '../redux/slices/filterSlice';
 import { fetchPizzas } from '../redux/slices/pizzasSlice';
 
 const Home = () => {
   const isParams = useRef(false);
   const isMounted = useRef(false);
 
-  const { categoryId, sortId, currentPage } = useSelector(
-    (state) => state.filters
-  );
+  const { categoryId, sortId, currentPage, searchValue } =
+    useSelector(selectFiltersState);
   const { items: pizzas, status } = useSelector((state) => state.pizzas);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { searchValue } = React.useContext(SearchContext);
 
   const getPizzas = useCallback(async () => {
     const sortList = ['rating', 'price', 'name'];

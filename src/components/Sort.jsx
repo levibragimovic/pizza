@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSortTypeId } from '../redux/slices/filterSlice';
+import { selectFiltersState, setSortTypeId } from '../redux/slices/filterSlice';
 
 const Sort = () => {
   const dispatch = useDispatch();
-  const sortId = useSelector((state) => state.filters.sortId);
+  const { sortId } = useSelector(selectFiltersState);
   const [open, setOpen] = useState(false);
   const list = ['популярности', 'цене', 'алфавиту'];
   const sortRef = useRef();
