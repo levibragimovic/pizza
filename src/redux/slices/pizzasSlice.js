@@ -12,9 +12,17 @@ export const fetchPizzas = createAsyncThunk(
   }
 );
 
+export const getPizzaItem = createAsyncThunk('getPizzaItem', async (id) => {
+  const { data } = await axios.get(
+    `https://63a08129e3113e5a5c3f9cd7.mockapi.io/items/${id}`
+  );
+  return data;
+});
+
 const initialState = {
   items: [],
-  status: 'loading'
+  status: 'loading',
+  pizzaItem: {}
 };
 
 export const pizzasSlice = createSlice({
@@ -23,6 +31,10 @@ export const pizzasSlice = createSlice({
   reducers: {
     setPizzas: (state, action) => {
       state.items = action.payload;
+    },
+    setPizzaItem: (state, action) => {
+      console.log('action: ', action.payload);
+      // state.pizzaItem = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -39,9 +51,21 @@ export const pizzasSlice = createSlice({
       state.status = 'error';
       state.items = [];
     });
+    builder.addCase(getPizzaItem.pending, (state) => {
+      state.status = 'loading';
+      state.pizzaItem = {};
+    });
+    builder.addCase(getPizzaItem.fulfilled, (state, action) => {
+      state.pizzaItem = action.payload;
+      state.status = 'success';
+    });
+    builder.addCase(getPizzaItem.rejected, (state) => {
+      state.status = 'error';
+      state.pizzaItem = {};
+    });
   }
 });
 
-export const { setPizzas } = pizzasSlice.actions;
+export const { setPizzas, setPizzaItem } = pizzasSlice.actions;
 
 export default pizzasSlice.reducer;
