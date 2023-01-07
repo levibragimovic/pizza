@@ -17,6 +17,7 @@ const Home = () => {
 
   const { categoryId, sortId, currentPage, searchValue } =
     useSelector(selectFiltersState);
+  //@ts-ignore
   const { items: pizzas, status } = useSelector((state) => state.pizzas);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,8 +26,10 @@ const Home = () => {
     const sortList = ['rating', 'price', 'name'];
     const category = categoryId ? `&category=${categoryId}&` : '&';
     dispatch(
+      //@ts-ignore
       fetchPizzas({
         currentPage,
+        //@ts-ignore
         category,
         sortValue: sortList[sortId],
         searchValue
@@ -63,7 +66,7 @@ const Home = () => {
   }, [categoryId, sortId, currentPage, navigate]);
 
   const skeletons = [...new Array(4)].map((_, i) => <Skeleton key={i} />);
-  const pizzaItems = pizzas.map((pizza) => (
+  const pizzaItems = pizzas.map((pizza: any) => (
     <PizzaBlock key={pizza.id} {...pizza} />
   ));
 

@@ -10,6 +10,7 @@ const FullPizza: React.FC = () => {
   const { status, pizzaItem } = useSelector((state: RootState) => state.pizzas);
 
   useEffect(() => {
+    //@ts-ignore
     dispatch(getPizzaItem(id));
   }, [id, dispatch]);
 
@@ -19,12 +20,17 @@ const FullPizza: React.FC = () => {
       {status === 'success' && (
         <div>
           <img
+            //@ts-ignore
             src={pizzaItem.imageUrl}
+            //@ts-ignore
             alt={pizzaItem.name}
             style={{ width: '200px' }}
           />
+          {/*  @ts-ignore*/}
           <h2>{pizzaItem.name}</h2>
+          {/*  @ts-ignore*/}
           <h3>{pizzaItem.price} руб.</h3>
+          {/*  @ts-ignore*/}
           <p>{pizzaItem.description}</p>
         </div>
       )}
