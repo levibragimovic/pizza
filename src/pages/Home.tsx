@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import { selectFiltersState, setParams } from '../redux/slices/filterSlice';
 import { fetchPizzas } from '../redux/slices/pizzasSlice';
 
-const Home = () => {
+const Home: React.FC = () => {
   const isParams = useRef(false);
   const isMounted = useRef(false);
 

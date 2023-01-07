@@ -19,7 +19,11 @@ const Search: React.FC = () => {
     debounce((str) => dispatch(setSearchValue(str)), 500)
   ).current;
 
-  const onTextChange = ({ target }: { target: any }) => {
+  const onTextChange = ({
+    target
+  }: {
+    target: EventTarget & HTMLInputElement;
+  }) => {
     setValue(target.value);
     updateInput(target.value);
   };

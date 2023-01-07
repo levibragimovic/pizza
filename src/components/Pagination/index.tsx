@@ -6,11 +6,14 @@ import styles from './Pagination.module.scss';
 type PaginationProps = {
   currentPage: number;
 };
+type SelectedPage = {
+  selected: number;
+};
 
 const Pagination: React.FC<PaginationProps> = ({ currentPage }) => {
   const dispatch = useDispatch();
-  const changePage = (e: any) => {
-    dispatch(setCurrentPage(e.selected + 1));
+  const changePage = ({ selected }: SelectedPage) => {
+    dispatch(setCurrentPage(selected + 1));
   };
 
   return (

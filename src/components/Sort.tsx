@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFiltersState, setSortTypeId } from '../redux/slices/filterSlice';
+
+type PopupClick = MouseEvent & { path: Node[] };
 
 const Sort = () => {
   const dispatch = useDispatch();
   const { sortId } = useSelector(selectFiltersState);
+
   const [open, setOpen] = useState(false);
   const list = ['популярности', 'цене', 'алфавиту'];
   const sortRef = useRef<HTMLDivElement>(null);
@@ -14,8 +17,9 @@ const Sort = () => {
   };
 
   useEffect(() => {
-    const onOutsideClick = (e: any) => {
-      if (!e.path.includes(sortRef.current)) {
+    const onOutsideClick = (e: MouseEvent) => {
+      const _event = e as PopupClick;
+      if (sortRef.current && !_event.path.includes(sortRef.current)) {
         setOpen(false);
       }
     };
