@@ -7,14 +7,14 @@ const Sort = () => {
   const { sortId } = useSelector(selectFiltersState);
   const [open, setOpen] = useState(false);
   const list = ['популярности', 'цене', 'алфавиту'];
-  const sortRef = useRef();
-  const selectFilter = (i) => {
+  const sortRef = useRef<HTMLDivElement>(null);
+  const selectFilter = (i: number) => {
     dispatch(setSortTypeId(i));
     setOpen(false);
   };
 
   useEffect(() => {
-    const onOutsideClick = (e) => {
+    const onOutsideClick = (e: any) => {
       if (!e.path.includes(sortRef.current)) {
         setOpen(false);
       }

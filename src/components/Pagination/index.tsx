@@ -3,9 +3,13 @@ import { useDispatch } from 'react-redux';
 import { setCurrentPage } from '../../redux/slices/filterSlice';
 import styles from './Pagination.module.scss';
 
-const Pagination = ({ currentPage }) => {
+type PaginationProps = {
+  currentPage: number;
+};
+
+const Pagination: React.FC<PaginationProps> = ({ currentPage }) => {
   const dispatch = useDispatch();
-  const changePage = (e) => {
+  const changePage = (e: any) => {
     dispatch(setCurrentPage(e.selected + 1));
   };
 

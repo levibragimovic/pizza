@@ -4,9 +4,12 @@ import logoSvg from '../assets/img/pizza-logo.svg';
 import { selectCartState } from '../redux/slices/cartSlice';
 import Search from './Search';
 
-const Header = () => {
+const Header: React.FC = () => {
   const { totalPrice, items } = useSelector(selectCartState);
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const totalCount = items.reduce(
+    (sum: number, item: any) => sum + item.count,
+    0
+  );
   const location = useLocation();
   return (
     <div className="header">
