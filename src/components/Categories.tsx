@@ -1,20 +1,25 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { selectFiltersState, setCategoryId } from '../redux/slices/filterSlice';
+import { memo } from 'react';
+import { useDispatch } from 'react-redux';
+import { setCategoryId } from '../redux/slices/filterSlice';
 
-const Categories: React.FC = () => {
+const categories = [
+  'Все',
+  'Мясные',
+  'Вегетарианская',
+  'Гриль',
+  'Острые',
+  'Закрытые'
+];
+
+interface ICategoryProps {
+  categoryId: number;
+}
+
+const Categories: React.FC<ICategoryProps> = memo(({ categoryId }) => {
   const dispatch = useDispatch();
-  const { categoryId } = useSelector(selectFiltersState);
   const onChangeCategory = (i: number) => {
     dispatch(setCategoryId(i));
   };
-  const categories = [
-    'Все',
-    'Мясные',
-    'Вегетарианская',
-    'Гриль',
-    'Острые',
-    'Закрытые'
-  ];
 
   return (
     <div className="categories">
@@ -31,6 +36,6 @@ const Categories: React.FC = () => {
       </ul>
     </div>
   );
-};
+});
 
 export default Categories;

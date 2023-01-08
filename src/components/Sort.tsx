@@ -1,15 +1,18 @@
-import { SyntheticEvent, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectFiltersState, setSortTypeId } from '../redux/slices/filterSlice';
+import { memo, useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setSortTypeId } from '../redux/slices/filterSlice';
+
+const list = ['популярности', 'цене', 'алфавиту'];
 
 type PopupClick = MouseEvent & { path: Node[] };
+interface ISortProps {
+  sortId: number;
+}
 
-const Sort = () => {
+const Sort: React.FC<ISortProps> = memo(({ sortId }) => {
   const dispatch = useDispatch();
-  const { sortId } = useSelector(selectFiltersState);
 
   const [open, setOpen] = useState(false);
-  const list = ['популярности', 'цене', 'алфавиту'];
   const sortRef = useRef<HTMLDivElement>(null);
   const selectFilter = (i: number) => {
     dispatch(setSortTypeId(i));
@@ -68,6 +71,6 @@ const Sort = () => {
       )}
     </div>
   );
-};
+});
 
 export default Sort;

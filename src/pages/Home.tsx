@@ -46,8 +46,8 @@ const Home: React.FC = () => {
       const params = qs.parse(
         window.location.search.substring(1)
       ) as unknown as FilterSliceStateType;
-      dispatch(setParams(params));
-      if (params.sortId === Number('0')) {
+      dispatch(setParams({ ...params }));
+      if (String(params.sortId) === '0') {
         isParams.current = false;
       } else {
         isParams.current = true;
@@ -79,8 +79,8 @@ const Home: React.FC = () => {
   return (
     <>
       <div className="content__top">
-        <Categories />
-        <Sort />
+        <Categories categoryId={categoryId} />
+        <Sort sortId={sortId} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">

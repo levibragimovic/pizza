@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useDispatch } from 'react-redux';
 import { setCurrentPage } from '../../redux/slices/filterSlice';
@@ -10,7 +11,7 @@ type SelectedPage = {
   selected: number;
 };
 
-const Pagination: React.FC<PaginationProps> = ({ currentPage }) => {
+const Pagination: React.FC<PaginationProps> = memo(({ currentPage }) => {
   const dispatch = useDispatch();
   const changePage = ({ selected }: SelectedPage) => {
     dispatch(setCurrentPage(selected + 1));
@@ -26,6 +27,6 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage }) => {
       forcePage={currentPage - 1}
     />
   );
-};
+});
 
 export default Pagination;
