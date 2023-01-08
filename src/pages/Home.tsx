@@ -8,8 +8,13 @@ import Pagination from '../components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
-import { selectFiltersState, setParams } from '../redux/slices/filterSlice';
+import {
+  FilterSliceStateType,
+  selectFiltersState,
+  setParams
+} from '../redux/slices/filterSlice';
 import { fetchPizzas } from '../redux/slices/pizzasSlice';
+import { AppDispatch, RootState } from '../redux/store';
 
 const Home: React.FC = () => {
   const isParams = useRef(false);
@@ -17,19 +22,18 @@ const Home: React.FC = () => {
 
   const { categoryId, sortId, currentPage, searchValue } =
     useSelector(selectFiltersState);
-  //@ts-ignore
-  const { items: pizzas, status } = useSelector((state) => state.pizzas);
-  const dispatch = useDispatch();
+  const { items: pizzas, status } = useSelector(
+    (state: RootState) => state.pizzas
+  );
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
   const getPizzas = useCallback(async () => {
     const sortList = ['rating', 'price', 'name'];
     const category = categoryId ? `&category=${categoryId}&` : '&';
     dispatch(
-      //@ts-ignore
       fetchPizzas({
         currentPage,
-        //@ts-ignore
         category,
         sortValue: sortList[sortId],
         searchValue
@@ -39,9 +43,11 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-      dispatch(setParams({ ...params }));
-      if (params.sortId === '0') {
+      const params = qs.parse(
+        window.location.search.substring(1)
+      ) as unknown as FilterSliceStateType;
+      dispatch(setParams(params));
+      if (params.sortId === Number('0')) {
         isParams.current = false;
       } else {
         isParams.current = true;

@@ -3,16 +3,30 @@ import axios from 'axios';
 
 type Params = {
   currentPage: number;
-  category: number;
+  category: string;
   sortValue: string;
   searchValue: string;
 };
+
+type PizzaItem = {
+  id: number;
+  name: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+};
+interface IPizzasSlice {
+  items: PizzaItem[];
+  status: string;
+  pizzaItem: PizzaItem | {};
+}
 
 export const fetchPizzas = createAsyncThunk(
   'pizzas/fetchAllPizzas',
   async (params: Params) => {
     const { currentPage, category, sortValue, searchValue } = params;
-    const { data } = await axios.get(
+    const { data } = await axios.get<PizzaItem[]>(
       `https://63a08129e3113e5a5c3f9cd7.mockapi.io/items?page=${currentPage}&limit=4${category}sortBy=${sortValue}&order=asc&filter=${searchValue}`
     );
     return data;
@@ -22,14 +36,14 @@ export const fetchPizzas = createAsyncThunk(
 export const getPizzaItem = createAsyncThunk(
   'getPizzaItem',
   async (id: string) => {
-    const { data } = await axios.get(
+    const { data } = await axios.get<PizzaItem[]>(
       `https://63a08129e3113e5a5c3f9cd7.mockapi.io/items/${id}`
     );
     return data;
   }
 );
 
-const initialState = {
+const initialState: IPizzasSlice = {
   items: [],
   status: 'loading',
   pizzaItem: {}

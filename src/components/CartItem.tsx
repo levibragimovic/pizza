@@ -1,6 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addItem, minusItem, removeItem } from '../redux/slices/cartSlice';
+import {
+  addItem,
+  CartItemType,
+  minusItem,
+  removeItem
+} from '../redux/slices/cartSlice';
 
 type CartItemProps = {
   id: string;
@@ -23,11 +28,11 @@ const CartItem: React.FC<CartItemProps> = ({
 }) => {
   const dispatch = useDispatch();
   const onCountInc = () => {
-    dispatch(addItem({ id }));
+    dispatch(addItem({ id } as CartItemType));
   };
   const onCountDec = () => {
     if (count === 1) return;
-    dispatch(minusItem({ id }));
+    dispatch(minusItem(id));
   };
   const onRemoveItem = () => {
     dispatch(removeItem(id));

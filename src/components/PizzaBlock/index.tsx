@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom';
 import { addItem } from '../../redux/slices/cartSlice';
 
 type PizzaBlockProps = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   imageUrl: string;
   sizes: number[];
   types: number[];
+  count: number;
 };
 
 const PizzaBlock: React.FC<PizzaBlockProps> = ({
@@ -19,7 +20,8 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
   price,
   imageUrl,
   sizes,
-  types
+  types,
+  count
 }) => {
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
@@ -38,7 +40,8 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
         imageUrl,
         type: typeName[activeType],
         price,
-        size: sizes[activeSize]
+        size: sizes[activeSize],
+        count
       })
     );
   };
