@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import logoSvg from '../assets/img/pizza-logo.svg';
@@ -9,6 +9,20 @@ const Header: React.FC = memo(() => {
   const { totalPrice, items } = useSelector(selectCartState);
   const totalCount = items.reduce((sum: number, item) => sum + item.count, 0);
   const location = useLocation();
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const data = {
+        items,
+        totalPrice
+      };
+      const json = JSON.stringify(data);
+      window.localStorage.setItem('cart', json);
+    }
+    isMounted.current = true;
+  }, [items, totalPrice]);
+
   return (
     <div className="header">
       <div className="container">

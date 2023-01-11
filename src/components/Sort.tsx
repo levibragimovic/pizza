@@ -2,8 +2,6 @@ import { memo, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSortTypeId } from '../redux/slices/filterSlice';
 
-const list = ['популярности', 'цене', 'алфавиту'];
-
 type PopupClick = MouseEvent & { path: Node[] };
 interface ISortProps {
   sortId: number;
@@ -11,9 +9,9 @@ interface ISortProps {
 
 const Sort: React.FC<ISortProps> = memo(({ sortId }) => {
   const dispatch = useDispatch();
-
+  const list = ['популярности', 'цене', 'алфавиту'];
   const [open, setOpen] = useState(false);
-  const sortRef = useRef<HTMLDivElement>(null);
+  const sortRef = useRef<HTMLSpanElement>(null);
   const selectFilter = (i: number) => {
     dispatch(setSortTypeId(i));
     setOpen(false);
@@ -22,7 +20,7 @@ const Sort: React.FC<ISortProps> = memo(({ sortId }) => {
   useEffect(() => {
     const onOutsideClick = (e: MouseEvent) => {
       const _event = e as PopupClick;
-      if (sortRef.current && !_event.path.includes(sortRef.current)) {
+      if (sortRef.current !== _event.target) {
         setOpen(false);
       }
     };
@@ -31,7 +29,7 @@ const Sort: React.FC<ISortProps> = memo(({ sortId }) => {
   }, []);
 
   return (
-    <div className="sort" ref={sortRef}>
+    <div className="sort">
       <div className="sort__label">
         <svg
           className={open ? 'sort-open' : ''}
@@ -50,6 +48,7 @@ const Sort: React.FC<ISortProps> = memo(({ sortId }) => {
         <span
           style={{ userSelect: 'none' }}
           onClick={() => setOpen((pv) => !pv)}
+          ref={sortRef}
         >
           {list[sortId]}
         </span>

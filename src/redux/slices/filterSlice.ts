@@ -33,8 +33,7 @@ export const filterSlice = createSlice({
       state.sortId = Number(action.payload.sortId);
       state.currentPage = Number(action.payload.currentPage);
     },
-    setSearchValue: (state, action) => {
-      console.log(action.payload);
+    setSearchValue: (state, action: PayloadAction<string>) => {
       state.searchValue = action.payload;
     },
     onHomePage: (state) => {
